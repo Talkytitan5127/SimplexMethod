@@ -37,3 +37,9 @@ def create_table(data):
         )
     table.append([0] + data['f_params'])
     return table
+
+
+def add_fractions(table):
+    for row in table:
+        for index in range(len(row)):
+            row[index] = Fraction(row[index])
