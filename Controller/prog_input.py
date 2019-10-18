@@ -2,19 +2,21 @@ import re
 
 
 def parse(elem):
-    index = int(elem[1]) - 1
-    value = int(elem[0]) if elem[0] else 1
+    index = int(elem[2]) - 1
+    value = int(elem[1]) if elem[1] else 1
+    if elem[0] == '-':
+        value *= -1
     return (index, value)
 
 
 def get_param(string, sign):
+    string = string.replace(' ', '')
     x_param, value = string.split(sign)
-    result = re.findall(r'(\d+)?x(\d+)', x_param)
+    result = re.findall(r'([-+])?(\d+)?x(\d+)', x_param)
     result = list(map(parse, result))
     return result, value
 
 def get_f_parameter(string):
-    string = string.replace(' ', '')
     result, criteria = get_param(string, '->')
     count_param = len(result)    
     data = {'func':criteria, 'f_params':[0]*count_param}
@@ -34,7 +36,7 @@ def get_relation(string):
     sign = get_sign(string)
     x_params, value = get_param(string, sign)
     count = len(x_params)
-    data = {'value':value, 'x_params': [0]*count, 'sign': sign}
+    data = {'value':int(value), 'x_params': [0]*count, 'sign': sign}
     for elem in x_params:
         index, key = elem
         data['x_params'][index] = key
