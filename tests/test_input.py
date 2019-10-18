@@ -12,7 +12,7 @@ class TestInput(ut.TestCase):
             f_string = f.readline().strip()
             data = prog_input.get_f_parameter(f_string)
         
-        self.assertEqual(data['f_params'][1], 30)
+        self.assertEqual(data['f_params'][1], 1)
 
 
     def test_input_from_file(self):
@@ -20,4 +20,4 @@ class TestInput(ut.TestCase):
             data = prog_input.read_from_file(f)
         
         print(data)
-        self.assertEqual(data['func'], 'max')
+        self.assertEqual(data['func'], 'min')
