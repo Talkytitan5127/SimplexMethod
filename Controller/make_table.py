@@ -36,6 +36,8 @@ def create_table(data):
             [elem['value']] + elem['x_params'][:-1]
         )
     table.append([0] + data['f_params'])
+
+    table = add_fractions(table)
     return table
 
 
@@ -43,3 +45,20 @@ def add_fractions(table):
     for row in table:
         for index in range(len(row)):
             row[index] = Fraction(row[index])
+    return table
+
+
+def correct_data(data):
+    data = remove_odds(data)
+    data = change_sings(data)
+    return data
+
+
+if __name__ == '__main__':
+    with open('../tests/input_test.txt', 'r') as f:
+        data = prog_input.read_from_file(f)
+    
+    data = correct_data(data)
+    table = create_table(data)
+    for row in table:
+        print(*row)
