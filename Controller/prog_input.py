@@ -43,10 +43,27 @@ def get_relation(string):
     return data
 
 
-def read_from_file(fh):
-    f_string = fh.readline().strip()
-    data = get_f_parameter(f_string)
-    data['inquat'] = []
-    for string in fh:
-        data['inquat'].append(get_relation(string))
+def read_from_file(filename):
+    """
+    Read input from file
+    Returns:
+    dict:
+    {
+        f_params: [],
+        inquat: [
+            {
+                value: int,
+                x_params: [],
+                sign: string
+            }
+        ],
+
+    }
+    """
+    with open(filename, 'r') as fh:
+        f_string = fh.readline().strip()
+        data = get_f_parameter(f_string)
+        data['inquat'] = []
+        for string in fh:
+            data['inquat'].append(get_relation(string))
     return data

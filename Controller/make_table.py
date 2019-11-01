@@ -1,7 +1,5 @@
 from fractions import Fraction
 
-import prog_input
-
 
 def remove_odds(data):
     for elem in data['inquat']:
@@ -30,13 +28,15 @@ def change_sings(data):
 
 
 def create_table(data):
+    data = correct_data(data)
+    
     table = []
     for elem in data['inquat']:
         table.append(
             [elem['value']] + elem['x_params'][:-1]
         )
     table.append([0] + data['f_params'])
-
+    
     table = add_fractions(table)
     return table
 
@@ -52,13 +52,3 @@ def correct_data(data):
     data = remove_odds(data)
     data = change_sings(data)
     return data
-
-
-if __name__ == '__main__':
-    with open('../tests/input_test.txt', 'r') as f:
-        data = prog_input.read_from_file(f)
-    
-    data = correct_data(data)
-    table = create_table(data)
-    for row in table:
-        print(*row)

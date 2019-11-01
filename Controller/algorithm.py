@@ -79,32 +79,7 @@ def simplex_method(table):
         table = calculate_new_table(table, r_row, r_col)
         yield table
 
-if __name__ == '__main__':
-    num_iteration = 0
-    table = [
-        [2, 1, -2],
-        [-2, -2, 1],
-        [5, 1, 1],
-        [0, 1, -1]
-    ]
-    print("Исходная таблица")
-    for i in table:
-        print(*i)
-    new_table = table
-    q = 0
-    while not check_f_params(new_table):
-        print("iteration", q)
-        print("check f", check_f_params(new_table))
-        
-        r_row, r_col = find_resolve_elements(new_table)
-
-        print("разрешающая строка,", r_row)
-        print("разрешающий столбец", r_col)
-
-        new_table = calculate_new_table(new_table, r_row, r_col)
-        print("новая матрица")
-        for i in new_table:
-            print(*i)
-        q += 1
-        
-
+def process_round(table):
+    r_row, r_col = find_resolve_elements(table)
+    new_table = calculate_new_table(table, r_row, r_col)
+    return new_table
