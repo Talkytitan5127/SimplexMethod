@@ -25,7 +25,7 @@ def find_resolve_string(table, column=0):
     else:
         min_index = -1
         min_value = 10**5
-        for index in range(1, len(table)):
+        for index in range(len(table)):
             relative = table[index][0] / table[index][column]
             if relative > 0 and relative < min_value:
                 min_index = index
