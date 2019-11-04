@@ -26,7 +26,10 @@ def find_resolve_string(table, column=0):
         min_index = -1
         min_value = 10**5
         for index in range(len(table)):
-            relative = table[index][0] / table[index][column]
+            try:
+                relative = table[index][0] / table[index][column]
+            except ZeroDivisionError:
+                continue
             if relative > 0 and relative < min_value:
                 min_index = index
                 min_value = relative

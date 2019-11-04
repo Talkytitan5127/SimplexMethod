@@ -3,7 +3,7 @@ import re
 
 def parse(elem):
     index = int(elem[2]) - 1
-    value = int(elem[1]) if elem[1] else 1
+    value = float(elem[1]) if elem[1] else 1
     if elem[0] == '-':
         value *= -1
     return (index, value)
@@ -12,7 +12,7 @@ def parse(elem):
 def get_param(string, sign):
     string = string.replace(' ', '')
     x_param, value = string.split(sign)
-    result = re.findall(r'([-+])?(\d+)?x(\d+)', x_param)
+    result = re.findall(r'([-+])?([0-9.]+)?x(\d+)', x_param)
     result = list(map(parse, result))
     return result, value
 
@@ -23,19 +23,18 @@ def get_f_parameter(string):
     for elem in result:
         index, value = elem
         data['f_params'][index] = value
-
+    data['count'] = len(data['f_params'])
     return data
 
 def get_sign(string):
     result = re.search(r'([<>]?=)', string)
     return result.group(1)
 
-def get_relation(string):
+def get_relation(string, count):
     string = string.strip()
     string.replace(' ', '')
     sign = get_sign(string)
     x_params, value = get_param(string, sign)
-    count = len(x_params)
     data = {'value':int(value), 'x_params': [0]*count, 'sign': sign}
     for elem in x_params:
         index, key = elem
@@ -65,5 +64,5 @@ def read_from_file(filename):
         data = get_f_parameter(f_string)
         data['inquat'] = []
         for string in fh:
-            data['inquat'].append(get_relation(string))
+            data['inquat'].append(get_relation(string, data['count']))
     return data
